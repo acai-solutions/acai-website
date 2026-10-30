@@ -1,0 +1,62 @@
+{{ define "main" }}
+
+<section class="section">
+  <div class="container mb-5">
+    <div class="row justify-content-center">
+			<div class="col-lg-10 align-self-center text-center">
+				<div class="block">
+					<h1 class="font-weight-bold mb-4 font-size-60">{{ .Title }}</h1>
+          <div class="col-md-10 m-auto p-3 blog-page">
+            <img class="card-img-top blog-tile-img" src="{{ .Params.image | absURL }}" alt='Illustration of {{ .Params.Image | replaceRE ".*?([\\w-]+).png" "$1" }}'>
+          </div>
+				</div>
+			</div>
+      <div class="col-md-8 text-center text-md-right mt-5 blog-social">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink | absURL }}" target="_blank">
+          <i class="fab fa-linkedin mr-4"></i>
+        </a>
+        <a href="https://twitter.com/intent/tweet?text={{ .Title | safeHTML }} {{ .Permalink | absURL }}" target="_blank">
+          <i class="fab fa-twitter mr-4"></i>
+        </a>
+        <a href="mailto:?subject={{ .Title | safeHTML }}&body={{ .Title | safeHTML }}%0d%0a{{ .Permalink | absURL }}" target="_blank" alt="send mail">
+          <i class="fas fa-envelope mr-4"></i>
+        </a>
+        <a href="#" onclick="copy_url(url='{{ .Permalink | absURL }}')">
+          <i class="fas fa-link"></i>
+        </a>
+        <div class="p-0 mt-md-0 mt-3 col-sm-12 col-md-6 float-left text-muted text-center text-md-left">
+          {{ .Params.Date | time.Format ":date_long" }} | {{ i18n "reading_duration" }} {{ .Params.Duration }} min
+        </div>
+      </div>
+
+      <div class="w-75 mt-4 alert alert-primary" style="display:none;" id="alert">
+        <strong>Link has been copied to clipboard.</strong>
+      </div>
+      <hr class="w-75 pb-3"/>
+
+      <div class="col-lg-10 text-center text-md-left mb-5">
+        <div class="container markdown">
+          {{ .Content }}
+        </div>
+      </div>
+
+      <hr class="w-75 mb-4"/>
+      <div class="col-md-8 text-center text-md-right blog-social">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink | absURL }}" target="_blank" alt="linkedin post">
+          <i class="fab fa-linkedin mr-4"></i>
+        </a>
+        <a href="https://twitter.com/intent/tweet?text={{ .Title | safeHTML }} {{ .Permalink | absURL }}" target="_blank" alt="twitter post">
+          <i class="fab fa-twitter mr-4"></i>
+        </a>
+        <a href="mailto:?subject={{ .Title | safeHTML }}&body={{ .Title | safeHTML }}%0d%0a{{ .Permalink | absURL }}" target="_blank" alt="send mail">
+          <i class="fas fa-envelope mr-4"></i>
+        </a>
+        <a href="#" onclick="copy_url(url='{{ .Permalink | absURL }}')" alt="copy link">
+          <i class="fas fa-link"></i>
+        </a>
+    </div>
+
+  </div>
+</section>
+
+{{ end }}

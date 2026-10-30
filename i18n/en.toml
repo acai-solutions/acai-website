@@ -1,0 +1,12 @@
+form_send_btn = 'Send'
+thank_you_title = 'Thank you for reaching out to us!'
+thank_you_text = 'Your message is important to us, and we aim to respond to all inquiries within 24 hours. We look forward to assisting you soon!'
+languages_text = 'Languages'
+sorry_lab_will_come_title = 'Thank you for interest in the ACAI AWS Lab'
+sorry_lab_will_come_text = 'We are currently working on a new version, which will be online soon.'
+cookieconsent_message = 'We use cookies on our website to ensure you get the best experience.'
+cookie_policy_link = 'Cookie policy'
+cookieconsent_dismiss_btn = 'Got it!'
+privacy_policy_text = 'Privacy Policy'
+imprint_text = 'Imprint'
+

@@ -1,0 +1,62 @@
+{{/* ACAI Hero — dark, rotating headlines, product shields */}}
+{{ $cta := site.Params.ctaUrl | default "/booking" | relLangURL }}
+{{ $solURL := "/solutions/" | relLangURL }}
+{{ $isDe := eq .Language.Lang "de" }}
+
+{{ partial "acai-nav.html" . }}
+
+<section class="acai-hero">
+  <div class="acai-hero__inner">
+    <div class="acai-hero__location">
+      ACAI GmbH · {{ if $isDe }}Schaffhausen, Schweiz{{ else }}Schaffhausen, Switzerland{{ end }}
+    </div>
+    <h1 class="acai-hero__headline" id="acai-hero-headline" data-acai-headlines='{{ jsonify (site.Params.heroHeadlines | default (slice "Your AWS Landing Zone Specialist" "We take you to the cloud" "Your digitalization superfood" "Your ideas — our solutions")) }}'>
+      {{ index (site.Params.heroHeadlines | default (slice "Your AWS Landing Zone Specialist")) 0 }}
+    </h1>
+    <p class="acai-hero__subhead">
+      {{ if $isDe }}
+        Enterprise-AWS-Cloud-Beratung und -Engineering — Landing Zones, Sicherheit und Automatisierung für die Schweiz und darüber hinaus.
+      {{ else }}
+        Enterprise AWS cloud consulting and engineering — Landing Zones, security, and automation for Switzerland and beyond.
+      {{ end }}
+    </p>
+    <div class="acai-hero__ctas">
+      <a class="acai-btn-primary" href="{{ $cta }}">
+        {{ if $isDe }}Kostenloses AWS-Audit buchen{{ else }}Book Your Free AWS Audit{{ end }}
+      </a>
+      <a class="acai-btn-ghost" href="{{ $solURL }}">
+        {{ if $isDe }}Lösungen entdecken →{{ else }}Explore Solutions →{{ end }}
+      </a>
+    </div>
+    <div class="acai-hero__shields">
+      {{ range site.Params.solutions }}
+        <a class="acai-hero__shield" href="{{ .url | relLangURL }}">
+          <img src="/images/logos/products/large-{{ .id }}-logo.png" alt="{{ .name }}">
+          <span>{{ .name }}</span>
+        </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var h = document.getElementById('acai-hero-headline');
+    if (h) {
+      try {
+        var list = JSON.parse(h.getAttribute('data-acai-headlines') || '[]');
+        if (list.length > 1) {
+          var i = 0;
+          setInterval(function () {
+            i = (i + 1) % list.length;
+            h.style.opacity = '0';
+            setTimeout(function () {
+              h.textContent = list[i];
+              h.style.opacity = '1';
+            }, 200);
+          }, 3200);
+        }
+      } catch (e) { /* ignore */ }
+    }
+  })();
+</script>

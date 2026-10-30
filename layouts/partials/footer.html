@@ -1,0 +1,116 @@
+{{ $skipFooter := or .IsHome (in (slice "solutions" "team" "blog" "tags" "booking") .Section) }}
+{{ if $skipFooter }}
+{{/* ACAI-branded pages render their own footer (acai-footer.html). */}}
+{{ else }}
+<footer>
+  <div class="container pt-5">
+    <div class="row justify-content-center justify-content-lg-between">
+      <div class="col-lg-5 col-md-8 mb-4">
+        {{ partial "contact-form.html" . }}
+      </div>
+      <div class="col-lg-5 col-md mb-4 mt-md-3 mt-lg-0 text-start footer-links">
+        <div class="row">
+          <!-- Footer Navigation -->
+          {{ range site.Menus.footer }}
+          {{ if .HasChildren }}
+          <div class="bottom-nav col-md-6 col p-0 mb-3">
+            <h5 class="mb-4 fw-bold">{{ .Name }}</h5>
+            <ul class="list-group">
+              {{ range .Children}}
+              {{ with . }}
+              <li class="list-group-item bg-transparent border-0 p-0 mb-2">
+                <a href="{{ .URL | relLangURL }}">
+                  {{ with .Params.icon }}
+                  <i class="{{ . }} mr-2"></i>
+                  {{ end }}
+                  {{ .Name }}
+                </a>
+              </li>
+              {{ end }}
+              {{ end }}
+            </ul>
+          </div>
+          {{ end }}
+          {{ end }}
+          <!-- End of Footer Navigation -->
+        </div>
+        <div class="row justify-content-start justify-content-lg-end">
+          <div class="bottom-nav col-md-6 col p-0 mb-3">
+            <h5 class="mb-4 fw-bold">{{ T "languages_text" }}</h5>
+            <div class="footer-lang-list">
+              {{ if .IsTranslated }}
+              {{ $siteLanguages := .Site.Languages }}
+              {{ $pageLang := .Page.Lang }}
+              <ul>
+                {{ range .Page.AllTranslations }}
+                {{ $translation := .}}
+                {{ range $siteLanguages }}
+                {{ if eq $translation.Lang .Lang }}
+                {{ if eq $pageLang .Lang }}
+                <li>
+                  <a class="active-lang" href="{{ $translation.Permalink }}">
+                    <svg class="toggle-on icon" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+                      <path
+                        d="M192 64C86 64 0 150 0 256S86 448 192 448H384c106 0 192-86 192-192s-86-192-192-192H192zm192 96a96 96 0 1 1 0 192 96 96 0 1 1 0-192z">
+                      </path>
+                    </svg>
+                    {{ if eq $pageLang "de" }}
+                    {{ T "altDeLangName" }}
+                    {{ else }}
+                    {{ .LanguageName }}
+                    {{ end }}
+                  </a>
+                </li>
+                {{ else }}
+                <li>
+                  <a href="{{ $translation.Permalink }}">
+                    <svg class="toggle-off icon" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+                      <path
+                        d="M384 128c70.7 0 128 57.3 128 128s-57.3 128-128 128H192c-70.7 0-128-57.3-128-128s57.3-128 128-128H384zM576 256c0-106-86-192-192-192H192C86 64 0 150 0 256S86 448 192 448H384c106 0 192-86 192-192zM192 352a96 96 0 1 0 0-192 96 96 0 1 0 0 192z">
+                      </path>
+                    </svg>
+                    {{ if eq $pageLang "de" }}
+                    {{ T "altEngLangName" }}
+                    {{ else }}
+                    {{ .LanguageName }}
+                    {{ end }}
+                  </a>
+                </li>
+                {{ end }}
+                {{ end }}
+                {{ end }}
+                {{ end }}
+              </ul>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 pt-4 border-top">
+        <div class="mb-4 d-flex justify-content-center align-items-center">
+          <p class="copyright-text">{{ site.Params.copyright }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+{{ end }}
+
+{{/* {{ if .Params.lightbox }}
+{{ $lightbox_js := resources.Get "plugins/glightbox/glightbox.min.js" }}
+<script src="{{ $lightbox_js.RelPermalink}}"></script>
+{{ end }} */}}
+
+{{ if not $skipFooter }}
+{{ $js_plugins := resources.Match "plugins/**.js" | resources.Concat "js/all_plugins.js" | minify }}
+{{ $js_main := resources.Get "js/script.js" | minify }}
+{{ $js := slice $js_plugins $js_main | resources.Concat "js/script.js" | minify | fingerprint }}
+<link rel="preload" as="script" href="{{ $js.RelPermalink }}">
+<script defer src="{{ $js.RelPermalink }}"></script>
+
+{{ if .Params.page_with_chatbot }}
+{{ partial "chatbot-widget.html" . }}
+{{ end }}
+{{ end }}

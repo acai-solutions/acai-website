@@ -1,0 +1,382 @@
+################################### Default Configuration ############################
+baseurl = "https://acai.gmbh/"
+title = "ACAI Consulting - Cloud Superfood"
+theme = "vex-hugo"
+# post excert
+summarylength = "20"
+# google analytics
+googleAnalytics = "G-N96HSFBQMH"
+
+# unsafe html
+[markup.goldmark.renderer]
+unsafe = true
+
+# robots
+enableRobotsTXT = true
+
+defaultContentLanguage = "en-us" # Set English as the default language
+defaultContentLanguageInSubdir = true
+
+[privacy]
+[privacy.disqus]
+disable = true
+
+[privacy.googleAnalytics]
+anonymizeIP = true
+disable = false
+respectDoNotTrack = true
+useSessionStorage = false
+
+[privacy.instagram]
+disable = true
+simple = false
+
+[privacy.x]
+disable = true
+enableDNT = false
+simple = false
+
+[privacy.vimeo]
+disable = true
+enableDNT = false
+simple = false
+
+[privacy.youtube]
+disable = true
+privacyEnhanced = false
+
+
+################################### English language #####################################
+[Languages.en]
+languageName = "English"
+languageCode = "en-us"
+contentDir = "content/english"
+weight = 1
+title = "ACAI | Cloud Superfood"
+
+[Languages.en.params]
+description = "Optimize your cloud management by implementing an AWS Landing Zone from ACAI for highest performance, compliance and scalability."
+
+###################################### English Navigation ######################################
+
+# homepage section menu
+[[Languages.en.menu.main]]
+name = "Home"
+url = "/"
+weight = 10
+
+[[Languages.en.menu.main]]
+identifier = "solutions"
+name = "Solutions"
+url = "/solutions/"
+weight = 20
+
+[[Languages.en.menu.main]]
+identifier = "vecto"
+name = "VECTO"
+url = "/solutions/vecto/"
+parent = "solutions"
+weight = 21
+
+[[Languages.en.menu.main]]
+identifier = "acf"
+name = "ACF"
+url = "/solutions/acf/"
+parent = "solutions"
+weight = 22
+
+[[Languages.en.menu.main]]
+identifier = "provisio"
+name = "PROVISIO"
+url = "/solutions/provisio/"
+parent = "solutions"
+weight = 23
+
+[[Languages.en.menu.main]]
+identifier = "semper"
+name = "SEMPER"
+url = "/solutions/semper/"
+parent = "solutions"
+weight = 25
+
+[[Languages.en.menu.main]]
+identifier = "docu"
+name = "Documentation"
+url = "https://docs.acai.gmbh"
+parent = "solutions"
+weight = 99
+
+[[Languages.en.menu.main]]
+name = "Blog"
+url = "blog/"
+weight = 30
+
+[[Languages.en.menu.main]]
+name = "Team"
+url = "team/"
+weight = 40
+
+[[Languages.en.menu.footer]]
+identifier = "company"
+name = "Company"
+weight = 100
+
+[[Languages.en.menu.footer]]
+parent = "company"
+name = "Team"
+url = "/team"
+weight = 101
+
+[[Languages.en.menu.footer]]
+parent = "company"
+name = "Privacy Policy"
+url = "privacy-policy/"
+weight = 103
+
+[[Languages.en.menu.footer]]
+parent = "company"
+name = "Imprint"
+url = "imprint/"
+weight = 104
+
+[[Languages.en.menu.footer]]
+identifier = "social"
+name = "Resources"
+weight = 110
+
+[[Languages.en.menu.footer]]
+parent = "social"
+name = "Linkedin"
+url = "https://linkedin.com/company/acai-consulting"
+weight = 111
+  [Languages.en.menu.footer.params]
+  icon = "fab fa-linkedin"
+
+[[Languages.en.menu.footer]]
+parent = "social"
+name = "Documentation"
+url = "https://docs.acai.gmbh"
+weight = 120
+  [Languages.en.menu.footer.params]
+  icon = "fas fa-book"
+
+[[Languages.en.menu.footer]]
+parent = "social"
+name = "Github"
+url = "https://github.com/orgs/acai-solutions/repositories"
+weight = 130
+  [Languages.en.menu.footer.params]
+  icon = "fab fa-github"
+
+[[Languages.en.menu.footer]]
+parent = "social"
+name = "Terraform Registry"
+url = "https://registry.terraform.io/search/modules?namespace=acai-solutions"
+weight = 140
+  [Languages.en.menu.footer.params]
+  icon = "fas fa-cube"
+
+
+################################### German Language #####################################
+
+[Languages.de]
+languageName = "German"
+languageCode = "de-de"
+contentDir = "content/deutsch"
+weight = 2
+title = "ACAI | Cloud Superfood"
+
+[Languages.de.params]
+description = "Optimieren Sie Ihr Cloud-Management durch die Implementierung einer AWS Landing Zone von ACAI für höchste Leistung, Compliance und Skalierbarkeit."
+
+###################################### German Navigation ######################################
+# homepage section menu
+[[Languages.de.menu.main]]
+name = "Home"
+url = "/"
+weight = 10
+
+[[Languages.de.menu.main]]
+identifier = "solutions"
+name = "Lösungen"
+url = "/solutions/"
+weight = 20
+
+[[Languages.de.menu.main]]
+identifier = "vecto"
+name = "VECTO"
+url = "/solutions/vecto/"
+parent = "solutions"
+weight = 21
+
+[[Languages.de.menu.main]]
+identifier = "acf"
+name = "ACF"
+url = "/solutions/acf/"
+parent = "solutions"
+weight = 22
+
+[[Languages.de.menu.main]]
+identifier = "provisio"
+name = "PROVISIO"
+url = "/solutions/provisio/"
+parent = "solutions"
+weight = 23
+
+[[Languages.de.menu.main]]
+identifier = "semper"
+name = "SEMPER"
+url = "/solutions/semper/"
+parent = "solutions"
+weight = 25
+
+[[Languages.de.menu.main]]
+identifier = "docu"
+name = "Dokumentation"
+url = "https://docs.acai.gmbh"
+parent = "solutions"
+weight = 99
+  
+[[Languages.de.menu.main]]
+name = "Blog"
+url = "blog/"
+weight = 30
+
+[[Languages.de.menu.main]]
+name = "Team"
+url = "team/"
+weight = 40
+
+[[Languages.de.menu.footer]]
+identifier = "company"
+name = "Unternehmen"
+weight = 100
+
+[[Languages.de.menu.footer]]
+parent = "company"
+name = "Team"
+url = "/team"
+weight = 101
+
+[[Languages.de.menu.footer]]
+parent = "company"
+name = "Datenschutzerklärung"
+url = "/privacy-policy/"
+weight = 103
+
+[[Languages.de.menu.footer]]
+parent = "company"
+name = "Impressum"
+url = "imprint/"
+weight = 104
+
+[[Languages.de.menu.footer]]
+identifier = "social"
+name = "Weiteres"
+weight = 110
+
+[[Languages.de.menu.footer]]
+parent = "social"
+name = "Linkedin"
+url = "https://linkedin.com/company/acai-consulting"
+weight = 111
+  [Languages.de.menu.footer.params]
+  icon = "fab fa-linkedin"
+
+[[Languages.de.menu.footer]]
+parent = "social"
+name = "Dokumentation"
+url = "https://docs.acai.gmbh"
+weight = 120
+  [Languages.de.menu.footer.params]
+  icon = "fas fa-book"
+
+[[Languages.de.menu.footer]]
+parent = "social"
+name = "Github"
+url = "https://github.com/orgs/acai-solutions/repositories"
+weight = 130
+  [Languages.de.menu.footer.params]
+  icon = "fab fa-github"
+
+[[Languages.de.menu.footer]]
+parent = "social"
+name = "Terraform Registry"
+url = "https://registry.terraform.io/search/modules?namespace=acai-solutions"
+weight = 140
+  [Languages.de.menu.footer.params]
+  icon = "fas fa-cube"
+
+
+########################### Default parameters ##########################
+[params]
+favicon = "images/favicon.png"
+main_logo = "images/logo/logo_banner.png"
+acai_logo_light = "/images/logos/acai_text-light.png"
+acai_logo_dark  = "/images/logos/acai_text-dark.png"
+linkedinAnalyticsID = "7689050"
+
+# Homepage CTA + form
+ctaUrl     = "/booking"
+formAction = "https://formspree.io/f/xzdobppj"
+
+# Hero rotating headlines
+heroHeadlines = [
+  "Your AWS Landing Zone Specialist",
+  "We take you to the cloud",
+  "Your digitalization superfood",
+  "Your ideas — our solutions",
+]
+
+# Solution product cards (used by acai-hero shields + acai-solutions grid)
+[[params.solutions]]
+  id    = "vecto"
+  name  = "VECTO"
+  color = "#2563EB"
+  url   = "/solutions/vecto/"
+  desc  = "Automated network connectivity and routing management across your multi-account AWS environment."
+  desc_de = "Automatisiertes Netzwerk- und Routing-Management über Ihre AWS-Multi-Account-Umgebung."
+[[params.solutions]]
+  id    = "acf"
+  name  = "ACF"
+  color = "#6B21A8"
+  url   = "/solutions/acf/"
+  desc  = "AWS Control Framework — governance and policy management for enterprise Landing Zones."
+  desc_de = "AWS Control Framework — Governance und Policy-Management für Enterprise Landing Zones."
+[[params.solutions]]
+  id    = "provisio"
+  name  = "PROVISIO"
+  color = "#B45309"
+  url   = "/solutions/provisio/"
+  desc  = "Self-service account vending with template-based provisioning and approval workflows."
+  desc_de = "Self-Service-Account-Vending mit vorlagenbasierter Bereitstellung und Genehmigungs-Workflows."
+[[params.solutions]]
+  id    = "semper"
+  name  = "SEMPER"
+  color = "#0F766E"
+  url   = "/solutions/semper/"
+  desc  = "Continuous compliance and drift detection with automated remediation capabilities."
+  desc_de = "Kontinuierliche Compliance und Drift-Erkennung mit automatisierter Behebung."
+
+# Meta data
+description = "Consulting, engineering, and solutions centered on automation, security, and governance within expansive AWS ecosystems."
+copyright = "Copyright © 2018 - 2026 ACAI GmbH"
+author = "ACAI GmbH"
+
+[taxonomies]
+tag = "tags"
+
+# Preloader
+[params.preloader]
+enable = false
+preloader = "" # use .png , .svg or .gif format
+
+[params.menu.main]
+visible = true
+
+###### Imaging ######
+[imaging]
+# Hugo image module https://github.com/gethugothemes/hugo-modules/blob/master/images/layouts/partials/image.html
+# See https://github.com/disintegration/imaging
+# Default JPEG or WebP quality setting. Default is 75.
+quality = 100

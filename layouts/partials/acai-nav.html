@@ -1,0 +1,68 @@
+{{/* ACAI Nav — shared dark sticky nav for all pages */}}
+{{ $logo := site.Params.acai_logo_light | default "/images/logos/acai_text-light.png" }}
+{{ $homeURL := site.BaseURL | relLangURL }}
+{{ $cta := site.Params.ctaUrl | default "/booking" | relLangURL }}
+{{ $isDe := eq .Language.Lang "de" }}
+
+<nav class="acai-nav" id="acai-nav" data-acai-nav>
+  <div class="acai-nav__inner">
+    <a class="acai-nav__logo" href="{{ $homeURL }}" aria-label="ACAI">
+      <img src="{{ $logo }}" alt="ACAI" loading="eager" decoding="async">
+    </a>
+    <div class="acai-nav__links">
+      {{ range site.Menus.main }}
+        {{ if not .HasChildren }}
+          <a href="{{ if gt (len .URL) 1 }}{{ .URL | relLangURL }}{{ else }}{{ $homeURL }}{{ end }}">{{ .Name }}</a>
+        {{ else }}
+          <a href="{{ .URL | relLangURL }}">{{ .Name }}</a>
+        {{ end }}
+      {{ end }}
+    </div>
+    <a class="acai-nav__cta" href="{{ $cta }}">
+      {{ if $isDe }}Kostenloses Audit{{ else }}Free Audit{{ end }}
+    </a>
+    <button class="acai-nav__hamburger" id="acai-nav-toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="acai-nav__mobile" id="acai-nav-mobile">
+    {{ range site.Menus.main }}
+      {{ if not .HasChildren }}
+        <a href="{{ if gt (len .URL) 1 }}{{ .URL | relLangURL }}{{ else }}{{ $homeURL }}{{ end }}">{{ .Name }}</a>
+      {{ else }}
+        <a href="{{ .URL | relLangURL }}">{{ .Name }}</a>
+      {{ end }}
+    {{ end }}
+    <a class="acai-nav__mobile-cta" href="{{ $cta }}">
+      {{ if $isDe }}Kostenloses Audit{{ else }}Free Audit{{ end }}
+    </a>
+  </div>
+</nav>
+
+<script>
+  (function () {
+    var nav = document.getElementById('acai-nav');
+    if (!nav) return;
+    var onScroll = function () {
+      if (window.scrollY > 40) nav.classList.add('is-scrolled');
+      else nav.classList.remove('is-scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    var toggle = document.getElementById('acai-nav-toggle');
+    var mobile = document.getElementById('acai-nav-mobile');
+    if (toggle && mobile) {
+      toggle.addEventListener('click', function () {
+        var open = mobile.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', function (e) {
+        if (!nav.contains(e.target)) {
+          mobile.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  })();
+</script>

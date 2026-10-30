@@ -1,0 +1,18 @@
+<head>
+  {{ partial "google-analytics.html" . }}
+  {{ partial "linkedin-analytics.html" . }}
+
+  {{ partial "meta-n-seo-tags.html" . }}
+
+  {{/*  {{ if .Params.lightbox }}
+    {{ $lightbox_css := resources.Get "plugins/glightbox/glightbox.min.css" }}
+    <link rel="stylesheet" href="{{ $lightbox_css.RelPermalink}}">
+  {{ end }}  */}}
+
+  {{ $css_plugins := resources.Match "plugins/**.css" | resources.Concat "css/all_plugins.css" }}
+  {{ $css_icons := resources.Get "plugins/fontawesome/all.min.css" }}
+  {{ $css_main := resources.Get "scss/style.scss" | toCSS }}
+  {{ $css := slice $css_plugins $css_icons $css_main | resources.Concat "css/style.css" | minify | fingerprint }}
+  <link rel="preload" as="style" href="{{ $css.RelPermalink }}">
+  <link rel="stylesheet" type="text/css" href="{{ $css.RelPermalink }}">
+</head>

@@ -1,0 +1,30 @@
+{{ define "main" }}
+{{ $isDe := eq .Language.Lang "de" }}
+{{ partial "acai-nav.html" . }}
+
+<section class="acai-page-hero">
+  <div class="acai-container">
+    <span class="acai-page-hero__eyebrow">{{ if $isDe }}Schlagwort{{ else }}Tag{{ end }}</span>
+    <h1>{{ .Title }}</h1>
+    <p>
+      {{ if $isDe }}
+        Alle Beiträge mit dem Schlagwort <strong>{{ .Title }}</strong>.
+      {{ else }}
+        All posts tagged with <strong>{{ .Title }}</strong>.
+      {{ end }}
+    </p>
+  </div>
+</section>
+
+<section class="acai-blog-list">
+  <div class="acai-container">
+    <div class="acai-blog-list__grid">
+      {{ range .Data.Pages }}
+        {{ partial "acai-blog-card.html" (dict "page" . "isFeatured" false "isDe" $isDe) }}
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ partial "acai-footer.html" . }}
+{{ end }}

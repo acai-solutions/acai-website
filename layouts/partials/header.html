@@ -1,0 +1,55 @@
+<!-- navigation -->
+{{ $skip := or .IsHome (in (slice "solutions" "team" "blog" "tags" "booking") .Section) }}
+{{ if $skip }}
+{{/* ACAI-branded pages render their own dark nav (acai-nav.html). */}}
+{{ else }}
+<header class="header">
+  <div class="container">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
+      <div class="container">
+        <a class="navbar-brand" href="{{ site.BaseURL | relLangURL }}">
+          {{ if site.Params.main_logo }}
+            {{ $logoSrc := resources.Get site.Params.main_logo }}
+            {{ $imageXL:= $logoSrc.Resize "300x webp" }}
+            {{ $imageSM:= $logoSrc.Resize "220x webp" }}
+            {{ $logoAlt:= ( print  "ACAI Consulting logo" ) }}
+            <picture>
+              <source srcset="{{ $imageSM.RelPermalink }}" width="{{ $imageSM.Width }}" height="{{ $imageSM.Height }}" media="(max-width: 575px)">
+              <source srcset="{{ $imageXL.RelPermalink }}" width="{{ $imageXL.Width }}" height="{{ $imageXL.Height }}">
+              <img class="img-fluid" src="{{ $imageXL.RelPermalink }}" loading="eager" decoding="async" width="{{ $imageXL.Width }}" height="{{ $imageXL.Height }}" alt="{{ $logoAlt }}">
+            </picture>
+          {{ else }}
+            {{ site.Title }}
+          {{ end }}
+        </a>
+        <button class="navbar-toggler border-0 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-grow-0" id="navigation">
+          <ul class="navbar-nav ml-auto text-center">
+            {{ range site.Menus.main }}
+              {{ if .HasChildren }}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbar-dropdown-{{ .Name | lower }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ .Name }}
+                  </a>
+                  <div class="nav-item dropdown-menu" aria-labelledby="navbar-dropdown-{{ .Name | lower }}">
+                    {{ range .Children }}
+                      <a class="dropdown-item" href="{{if .Pre}}{{site.BaseURL | relLangURL}}{{.Pre}}{{ .URL }}{{else}}{{.URL | absLangURL}}{{end}}">{{ .Name }}</a>
+                    {{ end }}
+                  </div>
+                </li>
+              {{ else }}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{if gt (len .URL) 1 }}{{if .Pre}}{{site.BaseURL | relLangURL}}{{.Pre}}{{ .URL }}{{else}}{{.URL | absLangURL}}{{end}}{{else}}{{ site.BaseURL | relLangURL }}{{end}}">{{ .Name }}</a>
+                </li>
+              {{ end }}
+            {{ end }}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+{{ end }}
+<!-- /navigation -->

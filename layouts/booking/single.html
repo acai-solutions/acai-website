@@ -1,0 +1,86 @@
+{{ define "main" }}
+{{ partial "acai-nav.html" . }}
+<section class="booking-hero-section booking-hero-section--appointment">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 text-center">
+        {{ with .Params.hero }}
+          <h1 class="booking-headline">{{ .headline | markdownify }}</h1>
+          <h2 class="booking-subheadline">{{ .subheadline }}</h2>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ with .Params.benefits }}
+{{ if .enable }}
+<section class="booking-benefits-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <h3 class="benefits-title">{{ .title }}</h3>
+        <ul class="benefits-list">
+          {{ range .items }}
+            <li><span class="benefit-check">✅</span> {{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+      <div class="col-lg-6 col-md-8">
+        <h3 class="benefits-title">{{ .learn_title }}</h3>
+        <ul class="benefits-list">
+          {{ range .learn_items }}
+            <li><span class="benefit-check">✅</span> {{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+{{ end }}
+
+{{ with .Params.calendar }}
+{{ if .enable }}
+<section class="booking-calendar-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        {{ with .title }}<h4 class="calendar-title">{{ . }}</h4>{{ end }}
+        <div class="calendly-wrapper">
+          <!-- Calendly inline widget begin -->
+          <div class="calendly-inline-widget" data-url="{{ .calendly_url }}?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <!-- Calendly inline widget end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+{{ end }}
+
+{{ with .Params.solution_logos }}
+{{ if .enable }}
+  <section class="booking-logo-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="solution-logos-grid">
+            {{ range .items }}
+              {{ $slug := lower .name }}
+              {{ $url := printf "/solutions/%s/" $slug | relLangURL }}
+              <a class="solution-logo-item" href="{{ $url }}" aria-label="{{ .name }}">
+                <img src="{{ .image | absURL }}" alt="{{ .name }} logo">
+              </a>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{{ end }}
+{{ end }}
+
+{{ partial "acai-footer.html" . }}
+{{ end }}

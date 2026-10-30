@@ -1,0 +1,43 @@
+{{/* ACAI Blog teaser — latest 3 posts */}}
+{{ $isDe := eq .Language.Lang "de" }}
+{{ $posts := first 3 (where site.RegularPages "Section" "blog") }}
+
+{{ if $posts }}
+<section id="blog" class="acai-section acai-blog">
+  <div class="acai-container">
+    <div class="acai-blog__head">
+      <div>
+        <span class="acai-eyebrow">Blog</span>
+        <h2 class="acai-h2" style="margin: 0;">
+          {{ if $isDe }}Einblicke & Updates{{ else }}Insights & updates{{ end }}
+        </h2>
+      </div>
+      <a class="acai-blog__all" href="{{ "blog/" | relLangURL }}">
+        {{ if $isDe }}Alle Beiträge →{{ else }}All posts →{{ end }}
+      </a>
+    </div>
+    <div class="acai-blog__grid">
+      {{ range $posts }}
+        {{ $tag := "" }}
+        {{ with .Params.tags }}{{ $tag = index . 0 }}{{ end }}
+        {{ $rt := div .WordCount 200 }}
+        {{ if lt $rt 1 }}{{ $rt = 1 }}{{ end }}
+        <a class="acai-blog__card" href="{{ .RelPermalink }}">
+          <div class="body">
+            <div class="row1">
+              {{ if $tag }}<span class="tag">{{ $tag }}</span>{{ else }}<span></span>{{ end }}
+              <span class="date">{{ .Date.Format (cond $isDe "January 2006" "January 2006") }}</span>
+            </div>
+            <h3>{{ .Title }}</h3>
+            <p class="excerpt">{{ .Summary | plainify | truncate 160 }}</p>
+            <div class="foot">
+              <span class="read-time">{{ $rt }} {{ if $isDe }}Min.{{ else }}min read{{ end }}</span>
+              <span class="read-link">{{ if $isDe }}Lesen →{{ else }}Read →{{ end }}</span>
+            </div>
+          </div>
+        </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}

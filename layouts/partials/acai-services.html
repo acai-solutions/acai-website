@@ -1,0 +1,56 @@
+{{/* ACAI Services — 3-column cards */}}
+{{ $isDe := eq .Language.Lang "de" }}
+{{ $items := slice
+  (dict
+    "icon" "☁"
+    "iconClass" ""
+    "title" (cond $isDe "Reise in die Cloud" "Journey to the Cloud")
+    "items" (cond $isDe
+      (slice "AWS Landing Zone Architektur" "Sicherheit & Governance Frameworks" "Cloud-Sicherheits-Audits" "Infrastructure as Code — Terraform")
+      (slice "AWS Landing Zone architecture" "Security & governance frameworks" "Cloud security audits" "Infrastructure as Code — Terraform")
+    )
+  )
+  (dict
+    "icon" "⚙"
+    "iconClass" "acai-services__icon--navy"
+    "title" (cond $isDe "Moderne Anwendungen" "Modern Applications")
+    "items" (cond $isDe
+      (slice "Cloud-native Anwendungsdesign" "Microservice-Architekturen" "Kubernetes & Docker" "CI/CD & DevOps Pipelines")
+      (slice "Cloud-native application design" "Microservice architectures" "Kubernetes & Docker" "CI/CD & DevOps pipelines")
+    )
+  )
+  (dict
+    "icon" "◈"
+    "iconClass" "acai-services__icon--muted"
+    "title" (cond $isDe "Liefermethoden" "Delivery Methods")
+    "items" (cond $isDe
+      (slice "Agile Lieferung: Scrum, SAFe" "Klassisches PM: PMI, IPMA, Hermes" "Business- & Prozessanalyse" "Test- & Rollout-Management")
+      (slice "Agile delivery: Scrum, SAFe" "Classic PM: PMI, IPMA, Hermes" "Business & process analysis" "Test & rollout management")
+    )
+  )
+}}
+
+<section id="services" class="acai-section acai-services">
+  <div class="acai-container">
+    <span class="acai-eyebrow">{{ if $isDe }}Was wir tun{{ else }}What We Do{{ end }}</span>
+    <h2 class="acai-h2">{{ if $isDe }}Cloud-Beratungsleistungen{{ else }}Cloud Consulting Services{{ end }}</h2>
+    <p class="acai-lead">
+      {{ if $isDe }}
+        Von der Cloud-Migrationsstrategie bis zur Enterprise-Landing-Zone — wir liefern End-to-End-Cloud-Engineering.
+      {{ else }}
+        From cloud migration strategy to enterprise-grade Landing Zone architecture — we deliver end-to-end cloud engineering.
+      {{ end }}
+    </p>
+    <div class="acai-services__grid">
+      {{ range $items }}
+        <div class="acai-services__card">
+          <div class="acai-services__icon {{ .iconClass }}">{{ .icon }}</div>
+          <h3>{{ .title }}</h3>
+          <ul>
+            {{ range .items }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>

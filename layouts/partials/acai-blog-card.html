@@ -1,0 +1,61 @@
+{{/* ACAI blog card — used by blog/list.html and taxonomy/tag.html
+     Params: page, isFeatured (bool), isDe (bool)                     */}}
+{{ $p := .page }}
+{{ $isFeatured := .isFeatured }}
+{{ $isDe := .isDe }}
+{{ $rt := div $p.WordCount 200 }}
+{{ if lt $rt 1 }}{{ $rt = 1 }}{{ end }}
+
+{{ $thumbURL := "" }}
+{{ with $p.Params.image }}
+  {{ $img := resources.Get . }}
+  {{ if $img }}
+    {{ $img = $img.Process "webp" }}
+    {{ $thumbURL = $img.RelPermalink }}
+  {{ else }}
+    {{ $thumbURL = . | absURL }}
+  {{ end }}
+{{ end }}
+
+{{ $initial := substr $p.Title 0 1 }}
+
+<div class="acai-blog-card{{ if $isFeatured }} acai-blog-card--feature{{ end }}">
+  <a class="acai-blog-card__overlay" href="{{ $p.RelPermalink }}" aria-label="{{ $p.Title | plainify }}"></a>
+  {{ if $thumbURL }}
+    <div class="thumb" style="background-image: url('{{ $thumbURL }}');"></div>
+  {{ else }}
+    <div class="thumb thumb-fallback">{{ $initial }}</div>
+  {{ end }}
+  <div class="body">
+    <div class="row1">
+      <div class="tags">
+        {{ range first 1 $p.Params.tags }}
+          {{ $taxPage := $p.Site.GetPage (printf "/tags/%s" .) }}
+          {{ if $taxPage }}
+            <a href="{{ $taxPage.RelPermalink }}">{{ . }}</a>
+          {{ else }}
+            <span>{{ . }}</span>
+          {{ end }}
+        {{ end }}
+      </div>
+      <span class="date">{{ $p.Date.Format "Jan 2, 2006" }}</span>
+    </div>
+    <h3>{{ $p.Title }}</h3>
+    {{ $excerpt := "" }}
+    {{ with $p.Params.summary }}{{ $excerpt = . }}{{ end }}
+    {{ if not $excerpt }}{{ with $p.Description }}{{ $excerpt = . }}{{ end }}{{ end }}
+    {{ if not $excerpt }}{{ with $p.Params.description }}{{ $excerpt = . }}{{ end }}{{ end }}
+    {{ if not $excerpt }}{{ $excerpt = $p.Summary }}{{ end }}
+    {{ with $excerpt }}
+      <p class="excerpt">{{ . | plainify | truncate 180 }}</p>
+    {{ end }}
+    <div class="foot">
+      <span class="read-time">{{ $rt }} {{ if $isDe }}Min.{{ else }}min read{{ end }}</span>
+      {{ with $p.Params.Author }}
+        <span class="author">{{ . }}</span>
+      {{ else }}
+        <span class="read-link">{{ if $isDe }}Lesen →{{ else }}Read →{{ end }}</span>
+      {{ end }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+// ============================================================
+// ACAI Design System — Tokens (fonts + colors)
+// Auto-generated from HANDOFF.md / colors_and_type.css
+// ============================================================
+
+// ── D-DIN Brand Typeface ─────────────────────────────────────
+@font-face {
+  font-family: 'D-DIN';
+  src: url('/fonts/D-DIN.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'D-DIN';
+  src: url('/fonts/D-DIN-Bold.otf') format('opentype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'D-DIN';
+  src: url('/fonts/D-DIN-Italic.otf') format('opentype');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'D-DIN Condensed';
+  src: url('/fonts/D-DINCondensed.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'D-DIN Condensed';
+  src: url('/fonts/D-DINCondensed-Bold.otf') format('opentype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'D-DIN Exp';
+  src: url('/fonts/D-DINExp.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'D-DIN Exp';
+  src: url('/fonts/D-DINExp-Bold.otf') format('opentype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'D-DIN Exp';
+  src: url('/fonts/D-DINExp-Italic.otf') format('opentype');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+
+// ── SCSS variables (HANDOFF Step 2) ──────────────────────────
+$font-primary:   'D-DIN', sans-serif;
+$font-condensed: 'D-DIN Condensed', sans-serif;
+$font-display:   'D-DIN Exp', sans-serif;
+
+$color-crimson:       #E6204B;
+$color-crimson-hover: #C41840;
+$color-crimson-light: #FCE8ED;
+$color-navy:          #0A1428;
+$color-navy-mid:      #1C2E4A;
+$color-navy-deep:     #060D1A;
+$color-surface:       #F8F9FC;
+$color-surface-2:     #F0F2F7;
+$color-border:        #E5E8EF;
+$color-border-strong: #C8CDD8;
+$color-muted:         #6B7280;
+$color-muted-light:   #A0A7B4;
+$color-text:          #374151;
+
+// ── CSS custom properties (for use in inline styles / partials) ──
+:root {
+  --color-crimson:        #{$color-crimson};
+  --color-crimson-hover:  #{$color-crimson-hover};
+  --color-crimson-light:  #{$color-crimson-light};
+  --color-navy:           #{$color-navy};
+  --color-navy-mid:       #{$color-navy-mid};
+  --color-navy-deep:      #{$color-navy-deep};
+  --color-surface:        #{$color-surface};
+  --color-surface-2:      #{$color-surface-2};
+  --color-border:         #{$color-border};
+  --color-border-strong:  #{$color-border-strong};
+  --color-muted:          #{$color-muted};
+  --color-muted-light:    #{$color-muted-light};
+  --color-text:           #{$color-text};
+  --color-white:          #FFFFFF;
+
+  --color-acf-primary:      #6B21A8;
+  --color-provisio-primary: #B45309;
+  --color-semper-primary:   #0F766E;
+  --color-vecto-primary:    #2563EB;
+
+  --font-primary:   #{$font-primary};
+  --font-condensed: #{$font-condensed};
+  --font-display:   #{$font-display};
+}

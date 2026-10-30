@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="{{ with site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}">
+  {{- partial "head.html" . -}}
+
+  <body id="body"{{ if .Params.carousel }} class="__with-carousel"{{ end }}>
+    {{- partial "preloader.html" . -}}
+    {{- partial "header.html" . -}}
+    {{- block "main" . }}{{- end }}
+    {{- partial "cookieconsent-data.html" . -}}
+    {{- partial "footer.html" . -}}
+    
+    <!-- Add the Mermaid.js script here -->
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({startOnLoad:true});
+    </script>
+  </body>
+</html>

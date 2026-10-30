@@ -1,0 +1,53 @@
+{{ define "main" }}
+
+<section class="section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 text-center mb-3">
+        <h1 class="font-weight-bold">{{.Title}}</h1>
+      </div>
+      <div class="col-md-5 text-center p-4 zoom" onclick="image_zoom(this)">
+				{{ with .Params }}
+        <img class="img-fluid w-100" src="{{ .Image | absURL }}" alt='Illustration of {{ .Image | replaceRE ".*?([\\w-]+).png" "$1" }}'>
+        {{ end }}
+			</div>
+      <hr class="w-75 mt-5 pb-5"/>
+    </div>
+    {{ range first 1 (where .Site.RegularPages "Section" "blog") }}
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-10 text-center mb-5">
+          <a href="{{ .Permalink }}" class="card rounded shadow border-0 mb-30 blog-tile">
+            <img class="card-img-top blog-tile-img" src="{{ .Params.image | absURL }}" alt='Illustration of {{ .Params.Image | replaceRE ".*?([\\w-]+).png" "$1" }}'>
+            <div class="card-body blog-tile-body text-left">
+              <h5 class="card-title font-weight-bold p-3 pb-0">{{ .Title }}</h5>
+              <p class="card-text p-3">{{ $.Page.RenderString .Params.Summary }}</p>
+            </div>
+            <div class="card-footer bg-transparent text-muted text-left">
+              {{ .Params.Date | time.Format ":date_long" }} | {{ i18n "reading_duration" }} {{ .Params.Duration }} min
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    {{ end }}
+    <div class="container col-lg-8 col-md-10 col-sm-10">
+      <div class="row justify-content-left card-deck">
+        {{ range after 1 (where .Site.RegularPages "Section" "blog") }}
+          <a href="{{ .Permalink }}" class="card rounded shadow border-0 mb-30 blog-tile blog-tile-list">
+            <img class="card-img-top blog-tile-img" src="{{ .Params.image | absURL }}" alt='Illustration of {{ .Params.Image | replaceRE ".*?([\\w-]+).png" "$1" }}'>
+            <div class="card-body blog-tile-body text-left">
+              <h5 class="card-title font-weight-bold p-3 pb-0">{{ .Title }}</h5>
+              <p class="card-text p-3">{{ $.Page.RenderString .Params.Summary }}</p>
+            </div>
+            <div class="card-footer bg-transparent text-muted text-left">
+              {{ .Params.Date | time.Format ":date_long" }} | {{ i18n "reading_duration" }} {{ .Params.Duration }} min
+            </div>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}
