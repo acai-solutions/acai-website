@@ -1,0 +1,50 @@
+<footer>
+	<div class="container pt-5">
+		<div class="row">
+			<div class="col-md-6 mb-3 text-center footer-logo">
+				<img src="{{ site.Params.logo_footer | absURL }}" alt='{{ site.Params.logo_footer | replaceRE ".*?([\\w-]+).png" "$1" }}' width="{{ site.Params.logo_footer_width }}">
+			</div>
+			<div class="col-md-6 mb-4 text-left footer-links">				
+				<!-- Footer Navigation -->
+				{{ range site.Menus.footer }}
+				{{ if .HasChildren }}
+				<div class="bottom-nav col-md-4 col-10 p-0 float-left mb-3">
+					<h5 class="mb-4 font-weight-bold">{{ .Name }}</h5>
+					<ul class="list-group">
+						{{ range .Children}} 
+						{{ with . }}
+						<li class="list-group-item bg-transparent border-0 p-0 mb-2">
+							<a href="{{ .URL | relLangURL }}">
+							{{ if eq .Parent "social" }}
+								<i class="fab fa-{{ lower .Name }} mr-2"></i>
+							{{ end }}
+								{{ .Name }}
+							</a>
+						</li>
+						{{ end }}
+						{{ end }}
+					</ul>
+				</div>
+				{{ end }}
+				{{ end }}
+				<!-- End of Footer Navigation -->
+
+			</div>
+			<div class="col-md-12 pt-4 border-top">
+				<div class="mb-4 d-flex justify-content-center align-items-center">
+					<p class="copyright-text">{{ site.Params.copyright }}</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</footer>
+
+<!-- JS Plugins -->
+{{ range site.Params.plugins.js}}
+<script src="{{ .link | absURL }}"></script>
+{{ end }}
+
+<!-- Main Script -->
+{{ $script := resources.Get "js/script.js" }}
+<script src="{{ $script.Permalink }}"></script>

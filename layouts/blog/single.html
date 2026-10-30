@@ -1,0 +1,79 @@
+{{ define "main" }}
+{{ $isDe := eq .Language.Lang "de" }}
+{{ partial "acai-nav.html" . }}
+
+{{ $rt := div .WordCount 200 }}
+{{ if lt $rt 1 }}{{ $rt = 1 }}{{ end }}
+
+{{ $heroImg := "" }}
+{{ with .Params.image }}
+  {{ $img := resources.Get . }}
+  {{ if $img }}
+    {{ $img = $img.Process "webp" }}
+    {{ $heroImg = $img.RelPermalink }}
+  {{ else }}
+    {{ $heroImg = . | absURL }}
+  {{ end }}
+{{ end }}
+
+<article class="acai-blog-single">
+  <section class="acai-blog-single__hero">
+    <div class="acai-container">
+      <div class="crumbs">
+        <a href="{{ "blog/" | relLangURL }}">Blog</a>
+        {{ with first 1 .Params.tags }}
+          {{ range . }}
+            <span class="sep">/</span>
+            {{ $tp := $.Site.GetPage (printf "/tags/%s" .) }}
+            {{ if $tp }}<a href="{{ $tp.RelPermalink }}">{{ . }}</a>{{ else }}<span>{{ . }}</span>{{ end }}
+          {{ end }}
+        {{ end }}
+      </div>
+      <h1>{{ .Title }}</h1>
+      <div class="meta">
+        <span><i class="far fa-calendar"></i> {{ .Date | time.Format ":date_long" }}</span>
+        <span class="dot">·</span>
+        <span><i class="far fa-clock"></i> {{ $rt }} {{ if $isDe }}Min. Lesezeit{{ else }}min read{{ end }}</span>
+        {{ with .Params.Author }}
+          <span class="dot">·</span>
+          <span><i class="far fa-user"></i> {{ . }}</span>
+        {{ end }}
+      </div>
+      {{ with .Params.tags }}
+        <div class="hero-tags">
+          {{ range . }}
+            {{ $tp := $.Site.GetPage (printf "/tags/%s" .) }}
+            {{ if $tp }}<a href="{{ $tp.RelPermalink }}">{{ . }}</a>{{ else }}<span>{{ . }}</span>{{ end }}
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
+  </section>
+
+  {{ if $heroImg }}
+    <div class="acai-blog-single__hero-image">
+      <img src="{{ $heroImg }}" alt="{{ .Title }}" loading="eager" decoding="async">
+    </div>
+  {{ end }}
+
+  <section class="acai-blog-single__article">
+    <div class="acai-container">
+      <div class="article-body markdown">
+        {{ .Content }}
+      </div>
+
+      <div class="acai-blog-single__share">
+        <span class="label">{{ if $isDe }}Teilen{{ else }}Share{{ end }}</span>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?mini=true&url={{ .Permalink | absURL }}" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://twitter.com/intent/tweet?text={{ .Title | safeHTML }} {{ .Permalink | absURL }}" target="_blank" rel="noopener" title="X / Twitter" aria-label="Share on X">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="14" height="14" aria-hidden="true" focusable="false" fill="currentColor"><path d="M714.2 519.3 1160.9 0H1055L667.1 451.0 357.3 0H0l468.5 681.8L0 1226.4h105.9l409.6-476.3 327.2 476.3H1200L714.2 519.3Zm-145 168.6-47.5-67.9L144.1 79.7h162.7l304.9 436.0 47.5 67.9 396.2 567.0H892.7L569.2 687.9Z"/></svg>
+        </a>
+        <a href="mailto:?subject={{ .Title | safeHTML }}&body={{ .Title | safeHTML }}%0d%0a{{ .Permalink | absURL }}" title="Email"><i class="fas fa-envelope"></i></a>
+        <a class="copy-link-element" href="#" data-value="{{ .Permalink | absURL }}" title="Copy link" onclick="event.preventDefault(); navigator.clipboard && navigator.clipboard.writeText(this.getAttribute('data-value')); this.classList.add('copied');"><i class="fas fa-link"></i></a>
+      </div>
+    </div>
+  </section>
+</article>
+
+{{ partial "acai-footer.html" . }}
+{{ end }}

@@ -1,0 +1,55 @@
+{{/* ACAI Footer */}}
+{{ $isDe := eq .Language.Lang "de" }}
+{{ $logo := site.Params.acai_logo_light | default "/images/logos/acai_text-light.png" }}
+
+<footer class="acai-footer">
+  <div class="acai-footer__inner">
+    <div class="acai-footer__top">
+      <div class="acai-footer__brand">
+        <img src="{{ $logo }}" alt="ACAI">
+        <p>
+          {{ if $isDe }}
+            Ihr AWS Landing Zone Spezialist.
+          {{ else }}
+            Your AWS Landing Zone specialist.
+          {{ end }}
+        </p>
+      </div>
+      <div class="acai-footer__cols">
+        {{ range site.Menus.footer }}
+          {{ if .HasChildren }}
+            <div class="acai-footer__col">
+              <span class="acai-footer__col-title">{{ .Name }}</span>
+              {{ range .Children }}
+                <a href="{{ .URL | relLangURL }}"
+                  {{ if hasPrefix .URL "http" }}target="_blank" rel="noopener"{{ end }}>
+                  {{ with .Params.icon }}<i class="{{ . }}"></i> {{ end }}{{ .Name }}
+                </a>
+              {{ end }}
+            </div>
+          {{ end }}
+        {{ end }}
+        <div class="acai-footer__col">
+          <span class="acai-footer__col-title">{{ if $isDe }}Sprache{{ else }}Language{{ end }}</span>
+          {{ range site.Languages }}
+            {{ $url := printf "/%s/" .Lang }}
+            <a href="{{ $url }}">{{ .LanguageName }}</a>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    <div class="acai-footer__bottom">
+      <span>{{ site.Params.copyright | default "© 2018–2026 ACAI GmbH" }}</span>
+    </div>
+  </div>
+</footer>
+
+{{ $js_plugins := resources.Match "plugins/**.js" | resources.Concat "js/all_plugins.js" | minify }}
+{{ $js_main := resources.Get "js/script.js" | minify }}
+{{ $js := slice $js_plugins $js_main | resources.Concat "js/script.js" | minify | fingerprint }}
+<link rel="preload" as="script" href="{{ $js.RelPermalink }}">
+<script defer src="{{ $js.RelPermalink }}"></script>
+
+{{ if .Params.page_with_chatbot }}
+{{ partial "chatbot-widget.html" . }}
+{{ end }}

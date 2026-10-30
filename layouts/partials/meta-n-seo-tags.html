@@ -1,0 +1,38 @@
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{ if .Title }}ACAI GmbH | {{ .Title }}{{ else }}{{ .Site.Title }}{{ end }}</title>
+<meta name="description" content="{{ .Params.description | default site.Params.description }}" />
+{{ with site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+<meta name="generator" content="Hugo {{ hugo.Version }}">
+<meta name="theme-name" content="vex-hugo" />
+{{ if .Params.noindex }}
+  <meta name="robots" content="noindex, nofollow" />
+{{ end }}
+<link rel="canonical" href="{{ .Permalink }}" itemprop="url" />
+{{ $favicon := site.Params.favicon }}
+{{ if $favicon }}
+  {{ if fileExists (add `assets/` (string $favicon)) }}
+    {{ $favicon:= resources.Get $favicon }}
+    {{ $favicon_16:= $favicon.Resize "16x png"}}
+    {{ $favicon_32:= $favicon.Resize "32x png"}}
+    {{ $favicon_180:= $favicon.Resize "180x png"}}
+    <link rel="shortcut icon" href="{{ $favicon_32.RelPermalink }}" type="image/x-icon" />
+    <link rel="icon" href="{{ $favicon_32.RelPermalink }}" type="image/x-icon" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ $favicon_16.RelPermalink }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ $favicon_32.RelPermalink }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ $favicon_180.RelPermalink }}" />
+  {{ end }}
+{{ end }}
+{{ $default_image := site.Params.main_logo }}
+{{ $page_image := .Params.image }}
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ .Title | default site.Title }}" />
+<meta property="og:description" content="{{ .Params.description | default site.Params.description }}" />
+<meta property="og:image" content="{{ if $page_image }}{{ $page_image | absURL }}{{ else }}{{ $default_image | absURL }}{{ end }}" />
+<meta name="twitter:card" content="summary" />
+<!-- <meta name="twitter:site" content="@user_name" /> -->
+<meta name="twitter:title" content="{{ .Title | default site.Title }}" />
+<meta name="twitter:description" content="{{ .Params.description | default site.Params.description }}" />
+<meta property="twitter:image" content="{{ if $page_image }}{{ $page_image | absURL }}{{ else }}{{ $default_image | absURL }}{{ end }}" />

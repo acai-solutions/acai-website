@@ -1,0 +1,64 @@
+{{/* ACAI Team — pulls from team/_index.md about_us.items */}}
+{{ $isDe := eq .Language.Lang "de" }}
+{{ $teamPage := site.GetPage (printf "team/_index.md") }}
+{{ if not $teamPage }}{{ $teamPage = site.GetPage "team" }}{{ end }}
+{{ $intro := "" }}
+{{ $members := slice }}
+{{ with $teamPage }}
+  {{ with .Params.about_us }}
+    {{ $intro = .introduction }}
+    {{ $members = .items }}
+  {{ end }}
+{{ end }}
+
+<section id="team" class="acai-section acai-team">
+  <div class="acai-container">
+    <span class="acai-eyebrow">{{ if $isDe }}Das Team{{ else }}The Team{{ end }}</span>
+    <div class="acai-team__head">
+      <h2 class="acai-h2" style="margin: 0;">
+        {{ if $isDe }}Lernen Sie unser Team kennen{{ else }}Meet our team{{ end }}
+      </h2>
+      <p class="acai-team__intro">
+        {{ if $intro }}{{ $intro }}{{ else }}
+          {{ if $isDe }}
+            Gegründet 2018 in der Schweiz. Cloud-Enthusiasten, die erstklassiges Engineering in der Schweiz und in Deutschland liefern.
+          {{ else }}
+            Established in 2018 in Switzerland. Cloud enthusiasts delivering top-tier engineering across Switzerland and Germany.
+          {{ end }}
+        {{ end }}
+      </p>
+    </div>
+    <div class="acai-team__grid">
+      {{ range $members }}
+        {{ if .enable }}
+          {{ $initial := "" }}
+          {{ range (split .name " ") }}
+            {{ if . }}{{ $initial = printf "%s%s" $initial (substr . 0 1) }}{{ end }}
+          {{ end }}
+          <div class="acai-team__card">
+            <div class="acai-team__avatar">
+              {{ if .image }}
+                {{ $img := resources.Get .image }}
+                {{ if $img }}
+                  <img src="{{ $img.RelPermalink }}" alt="{{ .name }}" loading="lazy" decoding="async">
+                {{ else }}
+                  {{ $initial }}
+                {{ end }}
+              {{ else }}{{ $initial }}{{ end }}
+            </div>
+            <div style="flex: 1;">
+              <div class="acai-team__name">{{ .name }}</div>
+              <div class="acai-team__role">{{ .role }}</div>
+              {{ with .content }}<p class="acai-team__bio">{{ . }}</p>{{ end }}
+              {{ with .competencies }}
+                <ul class="acai-team__skills">
+                  {{ range .list }}<li>{{ . }}</li>{{ end }}
+                </ul>
+              {{ end }}
+            </div>
+          </div>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</section>

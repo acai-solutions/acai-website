@@ -1,0 +1,35 @@
+{{/* ACAI Testimonials — quote cards from data/testimonials.yaml */}}
+{{ $isDe := eq .Language.Lang "de" }}
+{{ $items := site.Data.testimonials }}
+
+{{ if $items }}
+<section class="acai-section acai-testimonials">
+  <div class="acai-container">
+    <span class="acai-eyebrow">{{ if $isDe }}Stimmen unserer Kunden{{ else }}Client Voices{{ end }}</span>
+    <h2 class="acai-h2" style="margin-bottom: 48px;">
+      {{ if $isDe }}Vertraut von Enterprise-Teams{{ else }}Trusted by enterprise teams{{ end }}
+    </h2>
+    <div class="acai-testimonials__grid">
+      {{ range $items }}
+        {{ $quote := cond $isDe (default .quote .quote_de) (default .quote .quote_en) }}
+        {{ $role  := cond $isDe (default .role  .role_de)  (default .role  .role_en)  }}
+        <div class="acai-testimonials__card">
+          <div class="quote">"</div>
+          <p>{{ $quote }}</p>
+          <div class="who">
+            {{ if .logo }}
+              <div class="logo"><img src="{{ .logo | absURL }}" alt="{{ .company }}" loading="lazy" decoding="async"></div>
+            {{ else if .initial }}
+              <div class="avatar">{{ .initial }}</div>
+            {{ end }}
+            <div>
+              {{ with $role }}<div class="who-name">{{ . }}</div>{{ end }}
+              {{ with .company }}<div class="who-co">{{ . }}</div>{{ end }}
+            </div>
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,116 @@
+{{ define "main" }}
+{{ $isDe := eq .Language.Lang "de" }}
+{{/* Look up product params by file basename (vecto, acf, provisio, semper) */}}
+{{ $id := .File.BaseFileName }}
+{{ $product := dict }}
+{{ range site.Params.solutions }}
+  {{ if eq .id $id }}{{ $product = . }}{{ end }}
+{{ end }}
+{{ $accent := index $product "color" | default "#E6204B" }}
+
+{{ partial "acai-nav.html" . }}
+
+<section class="acai-page-hero" style="--page-accent: {{ $accent }};">
+  <div class="acai-container">
+    {{ if $product.id }}
+      <div class="acai-page-hero__logo">
+        <img src="/images/logos/products/large-{{ $product.id }}-logo.png" alt="{{ $product.name }}">
+      </div>
+    {{ end }}
+    <span class="acai-page-hero__eyebrow">
+      {{ if $isDe }}Lösung{{ else }}Solution{{ end }}
+    </span>
+    <h1>{{ if .Params.intro_section.title }}{{ .Params.intro_section.title }}{{ else }}{{ .Title }}{{ end }}</h1>
+    {{ with .Params.description }}<p>{{ . }}</p>{{ end }}
+  </div>
+</section>
+
+{{ if .Params.intro_section.enable }}
+  {{ with .Params.intro_section }}
+    <section class="acai-solution__intro" style="--page-accent: {{ $accent }};">
+      <div class="acai-container">
+        <div class="content">
+          {{ .content | markdownify }}
+        </div>
+        {{ if .cta.show }}
+          {{ with .cta }}
+            <a class="acai-solution__cta" href="{{ .link | absURL }}">{{ .text }}</a>
+          {{ end }}
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+{{ end }}
+
+{{ if .Params.key_features_section.enable }}
+  {{ with .Params.key_features_section }}
+    <section class="acai-solution__features" id="key-features"
+      style="--page-accent: {{ $accent }}; --page-accent-light: {{ $accent }}1a;">
+      <div class="acai-container">
+        <h2>{{ .title | default .Title }}</h2>
+        {{ if .image }}
+          <img class="feat-img" src="{{ .image | absURL }}" alt="{{ .title }}">
+        {{ end }}
+        <div class="grid">
+          {{ range .content_left }}
+            <div class="feat">
+              <div class="icon"><i class="fa-solid {{ .icon }}"></i></div>
+              <div>
+                <h4>{{ .title }}</h4>
+                <p>{{ .content | markdownify }}</p>
+              </div>
+            </div>
+          {{ end }}
+          {{ range .content_right }}
+            <div class="feat">
+              <div class="icon"><i class="fa-solid {{ .icon }}"></i></div>
+              <div>
+                <h4>{{ .title }}</h4>
+                <p>{{ .content | markdownify }}</p>
+              </div>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    </section>
+  {{ end }}
+{{ end }}
+
+{{ if .Params.info_section.enable }}
+  {{ with .Params.info_section }}
+    <section class="acai-solution__info" id="info" style="--page-accent: {{ $accent }};">
+      <div class="acai-container">
+        {{ range .list }}
+          <div class="info-block">
+            <h2>{{ .title }}</h2>
+            {{ with .content }}<p>{{ . | markdownify }}</p>{{ end }}
+            <ul>
+              {{ range .links }}
+                <li>
+                  {{ if hasPrefix .url "media/" }}
+                    <a href="{{ .url | absURL }}" target="_blank" rel="noopener">{{ .link_name }}</a>
+                  {{ else if hasPrefix .url "http" }}
+                    <a href="{{ .url }}" target="_blank" rel="noopener">{{ .link_name }}</a>
+                  {{ else }}
+                    <a href="{{ .url | absLangURL }}">{{ .link_name }}</a>
+                  {{ end }}
+                </li>
+              {{ end }}
+              {{ $tag := .filter_by_tag }}
+              {{ if $tag }}
+                {{ range (where site.RegularPages "Section" "blog") }}
+                  {{ if in .Params.tags $tag }}
+                    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                  {{ end }}
+                {{ end }}
+              {{ end }}
+            </ul>
+          </div>
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+{{ end }}
+
+{{ partial "acai-footer.html" . }}
+{{ end }}

@@ -1,0 +1,126 @@
+{{ define "main" }}
+{{ $isDe := eq .Language.Lang "de" }}
+
+{{ partial "acai-nav.html" . }}
+
+<section class="acai-page-hero">
+  <div class="acai-container">
+    <span class="acai-page-hero__eyebrow">{{ if $isDe }}Das Team{{ else }}The Team{{ end }}</span>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.about_us.introduction }}
+      <p>{{ . }}</p>
+    {{ end }}
+  </div>
+</section>
+
+<section class="acai-team-page">
+  <div class="acai-container">
+    <div class="acai-team-page__grid">
+      {{ range (where .Params.about_us.items "enable" true) }}
+        {{ $initial := "" }}
+        {{ range (split .name " ") }}
+          {{ if . }}{{ $initial = printf "%s%s" $initial (substr . 0 1) }}{{ end }}
+        {{ end }}
+
+        <div class="acai-team-card">
+          <div class="acai-team-card__media">
+            <div class="acai-team-card__photo">
+              {{ if .image }}
+                {{ $img := resources.Get .image }}
+                {{ if $img }}
+                  {{ $resized := $img.Resize "320x webp" }}
+                  <img src="{{ $resized.RelPermalink }}" alt="{{ .name }}" loading="lazy" decoding="async">
+                {{ else }}{{ $initial }}{{ end }}
+              {{ else }}{{ $initial }}{{ end }}
+            </div>
+            <div class="acai-team-card__socials">
+              {{ with .linkedin }}
+                <a href="{{ . | safeURL }}" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              {{ end }}
+              {{ with .credly }}
+                <a href="{{ . | safeURL }}" target="_blank" rel="noopener" title="Credly — AWS Certifications"><i class="fa-solid fa-award"></i></a>
+              {{ end }}
+              {{ with .github }}
+                <a href="{{ . | safeURL }}" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+              {{ end }}
+              {{ with .cv }}
+                <a href="{{ . | safeURL }}" target="_blank" rel="noopener" title="{{ if $isDe }}Lebenslauf{{ else }}CV{{ end }} (PDF)"><i class="fa-regular fa-file-pdf"></i></a>
+              {{ end }}
+            </div>
+          </div>
+
+          <div>
+            {{/* 1. Name (large) */}}
+            <h2 class="acai-team-card__name">{{ .name }}</h2>
+
+            {{/* 2. Title (small underneath) — academic credentials */}}
+            {{ with .title }}
+              <p class="acai-team-card__title">{{ . }}</p>
+            {{ end }}
+
+            {{/* 3. Role */}}
+            {{ with .role }}
+              <span class="acai-team-card__role">{{ . }}</span>
+            {{ end }}
+
+            {{/* 4. Content (most important) */}}
+            {{ with .content }}
+              <p class="acai-team-card__content">{{ . | markdownify }}</p>
+            {{ end }}
+
+            {{/* AWS Certifications — top priority for our industry */}}
+            {{ with .aws_certifications }}
+              <div class="acai-team-card__section acai-team-card__section--certifications">
+                <h4>{{ if $isDe }}AWS Zertifizierungen{{ else }}AWS Certifications{{ end }}</h4>
+                <ul>
+                  {{ range . }}<li>{{ . }}</li>{{ end }}
+                </ul>
+              </div>
+            {{ end }}
+
+            {{/* Competencies */}}
+            {{ with .competencies }}
+              <div class="acai-team-card__section">
+                <h4>{{ .title }}</h4>
+                <ul>
+                  {{ range .list }}<li>{{ . }}</li>{{ end }}
+                </ul>
+              </div>
+            {{ end }}
+
+            {{/* Reference projects */}}
+            {{ with .projects }}
+              <div class="acai-team-card__section">
+                <h4>{{ .title | default (cond $isDe "Referenzprojekte" "Reference Projects") }}</h4>
+                <ul>
+                  {{ range .list }}<li>{{ . }}</li>{{ end }}
+                </ul>
+              </div>
+            {{ end }}
+
+            {{/* Experience / education */}}
+            {{ with .experience }}
+              <div class="acai-team-card__section">
+                <h4>{{ .title }}</h4>
+                <ul>
+                  {{ range .list }}<li>{{ . }}</li>{{ end }}
+                </ul>
+              </div>
+            {{ end }}
+
+            {{/* Credly fallback CTA */}}
+            {{ if and .credly (not .aws_certifications) }}
+              <a class="acai-team-card__cred-link" href="{{ .credly | safeURL }}" target="_blank" rel="noopener">
+                <i class="fa-solid fa-award"></i>
+                {{ if $isDe }}AWS Zertifizierungen auf Credly ansehen{{ else }}View AWS certifications on Credly{{ end }}
+              </a>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ partial "acai-footer.html" . }}
+{{ end }}

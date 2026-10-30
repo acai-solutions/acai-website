@@ -1,0 +1,48 @@
+{{ define "main" }}
+{{ $isDe := eq .Language.Lang "de" }}
+
+{{ partial "acai-nav.html" . }}
+
+<section class="acai-page-hero">
+  <div class="acai-container">
+    <span class="acai-page-hero__eyebrow">ACAI Solutions</span>
+    <h1>{{ .Title }}</h1>
+    <p>
+      {{ if $isDe }}
+        Vier Produkte. Eine Plattform. Open-Source und Enterprise-erprobt für Ihre AWS Landing Zone.
+      {{ else }}
+        Four products. One platform. Open-source and enterprise-proven for your AWS Landing Zone.
+      {{ end }}
+    </p>
+  </div>
+</section>
+
+<section class="acai-solutions-list">
+  <div class="acai-container">
+    <div class="acai-solutions-list__grid">
+      {{ $pages := where .Site.RegularPages "Section" "solutions" }}
+      {{ range site.Params.solutions }}
+        {{ $params := . }}
+        {{ $page := index (where $pages "File.BaseFileName" .id) 0 }}
+        <a class="acai-solution-card" href="{{ if $page }}{{ $page.RelPermalink }}{{ else }}{{ .url | relLangURL }}{{ end }}"
+          style="--solution-color: {{ .color }};">
+          <div class="head">
+            <img src="/images/logos/products/large-{{ .id }}-logo.png" alt="{{ .name }}">
+            <span class="name">{{ .name }}</span>
+          </div>
+          {{ with $page }}
+            <h3>{{ if .Params.intro_section.title }}{{ .Params.intro_section.title }}{{ else }}{{ .Title }}{{ end }}</h3>
+            <p>{{ .Params.description | default ($params.desc) }}</p>
+          {{ else }}
+            <h3>{{ $params.name }}</h3>
+            <p>{{ if $isDe }}{{ $params.desc_de | default $params.desc }}{{ else }}{{ $params.desc }}{{ end }}</p>
+          {{ end }}
+          <span class="more">{{ if $isDe }}Mehr erfahren →{{ else }}Learn more →{{ end }}</span>
+        </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ partial "acai-footer.html" . }}
+{{ end }}

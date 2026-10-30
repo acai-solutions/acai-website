@@ -1,0 +1,30 @@
+{{/* ACAI Solutions — dark product cards */}}
+{{ $isDe := eq .Language.Lang "de" }}
+
+<section id="solutions" class="acai-section acai-solutions">
+  <div class="acai-container">
+    <span class="acai-eyebrow">ACAI Solutions</span>
+    <div class="acai-solutions__head">
+      <h2 class="acai-solutions__title">
+        {{ if $isDe }}Vier Produkte. Eine Plattform.{{ else }}Four products. One platform.{{ end }}
+      </h2>
+      <a class="acai-solutions__doclink" href="https://docs.acai.gmbh" target="_blank" rel="noopener">
+        {{ if $isDe }}Dokumentation →{{ else }}Documentation →{{ end }}
+      </a>
+    </div>
+    <div class="acai-solutions__grid">
+      {{ range site.Params.solutions }}
+        <div class="acai-solutions__card" style="--solution-color: {{ .color }};">
+          <div class="head">
+            <img src="/images/logos/products/large-{{ .id }}-logo.png" alt="{{ .name }}">
+            <span>{{ .name }}</span>
+          </div>
+          <p>{{ if $isDe }}{{ .desc_de | default .desc }}{{ else }}{{ .desc }}{{ end }}</p>
+          <a class="learn" href="{{ .url | relLangURL }}" style="color: {{ .color }};">
+            {{ if $isDe }}Mehr erfahren →{{ else }}Learn more →{{ end }}
+          </a>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,23 @@
+<form class="contact-form" name="contact-form" method="POST" action="{{ site.Params.formAction }}">
+  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+  <input type="hidden" name="_next" value="{{ "/thank-you/" | absLangURL }}">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group text-start mb-3">
+        <label for="email-input">Email</label>
+        <input type="email" class="form-control mt-2" id="email-input" name="email" required />
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group text-start mb-3">
+        <label for="name-input">Name</label>
+        <input type="text" class="form-control mt-2" id="name-input" name="name" required />
+      </div>
+    </div>
+  </div>
+  <div class="form-group text-start mb-3">
+    <label for="message-input">Message</label>
+    <textarea class="form-control mt-2" id="message-input" name="message" rows="5" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-outline-secondary">{{ T "form_send_btn" }}</button>
+</form>

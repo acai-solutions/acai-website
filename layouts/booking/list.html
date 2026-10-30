@@ -1,0 +1,82 @@
+{{ define "main" }}
+{{ partial "acai-nav.html" . }}
+<section class="booking-hero-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 text-center">
+        {{ with .Params.hero }}
+          <p class="booking-eyebrow">{{ .eyebrow }}</p>
+          <h1 class="booking-headline">{{ .headline | markdownify }}</h1>
+          {{ if .subheadline }}<p class="booking-subheadline">{{ .subheadline }}</p>{{ end }}
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ with .Params.video_section }}
+{{ if .enable }}
+<section class="booking-video-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="booking-video-wrapper">
+          <script src="https://cdn.jsdelivr.net/npm/@mux/mux-player"></script>
+          <mux-player
+            playback-id="{{ .mux_playback_id }}"
+            autoplay
+            muted
+            controls
+            playsinline
+            style="width:100%;aspect-ratio:16/9;border-radius:12px;"
+          ></mux-player>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+{{ end }}
+
+<section class="booking-cta-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        {{ with .Params.cta }}
+          <a href="{{ .link | relLangURL }}" class="booking-cta-btn">{{ .text }}</a>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ with .Params.testimonials }}
+{{ if .enable }}
+<section class="booking-testimonials-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      {{ range .items }}
+        <div class="col-lg-5 col-md-6 mb-4">
+          <div class="booking-testimonial-card">
+            {{ if .logo }}
+            <div class="testimonial-logo">
+              <img src="{{ .logo | absURL }}" alt="{{ .company }} logo">
+            </div>
+            {{ end }}
+            <div class="testimonial-content">
+              <p>"{{ .quote }}"</p>
+            </div>
+            <div class="testimonial-author">
+              <strong>{{ .role }}</strong>{{ if .company }} - <span>{{ .company }}</span>{{ end }}
+            </div>
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+{{ end }}
+
+{{ partial "acai-footer.html" . }}
+{{ end }}

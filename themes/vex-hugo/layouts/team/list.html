@@ -1,0 +1,39 @@
+{{ define "main" }}
+<section class="section">
+  <div class="container mb-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 text-center mb-5">
+        <h1 class="font-weight-bold">{{.Title}}</h1>
+      </div>
+
+      <div class="col-lg-10 text-center text-md-left mb-5">
+        <div class="content">
+          <p>{{ $.Page.RenderString .Params.about_us.introduction }}</p>
+        </div>
+      </div>
+
+      <hr class="w-75 mb-40"/>
+
+      {{ range $index, $element := shuffle (where .Params.about_us.items "enable" true) }}
+      <div class="row m-3 mt-5 p-3 about-row">
+        <div class="col-md-4 text-center mb-5 mb-lg-0 item animated wow fadeIn zoom" onclick="image_zoom(this)">
+          <img class="img-fluid p-4 portrait" src="{{ .image | absURL }}" alt='Picture of {{ .name }}'>
+        </div>
+        <div class="col-md-8 align-self-center text-center text-md-left about-text">
+          <div class="content">
+            <h4 class="subheading mb-10 pb-0">{{ $.Page.RenderString .name }}
+              <a class="social" href="{{ .linkedin | safeURL }}" class="h2" title="linkedin">
+                <i class="fab fa-linkedin m-3"></i>
+              </a>
+            </h4>
+            <h4 class="mb-20">{{ $.Page.RenderString .title }}</h4>
+            <p>{{ $.Page.RenderString .content }}</p>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ end }}

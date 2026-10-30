@@ -1,0 +1,20 @@
+{{/* ACAI Stats bar */}}
+{{ $isDe := eq .Language.Lang "de" }}
+{{ $stats := site.Params.stats | default (slice
+  (dict "value" "2018" "label" (cond $isDe "Gegründet" "Founded"))
+  (dict "value" "8+"   "label" (cond $isDe "Jahre Erfahrung" "Years Experience"))
+  (dict "value" "50+"  "label" (cond $isDe "Projekte" "Projects Delivered"))
+  (dict "value" "CH + DE" "label" (cond $isDe "Märkte" "Markets Served"))
+  (dict "value" "4"    "label" (cond $isDe "Lösungen" "Solutions"))
+) }}
+
+<section class="acai-stats">
+  <div class="acai-stats__inner">
+    {{ range $stats }}
+      <div class="acai-stats__item">
+        <div class="acai-stats__value">{{ .value }}</div>
+        <div class="acai-stats__label">{{ .label }}</div>
+      </div>
+    {{ end }}
+  </div>
+</section>

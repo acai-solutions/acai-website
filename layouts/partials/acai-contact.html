@@ -1,0 +1,51 @@
+{{/* ACAI Contact — dark form */}}
+{{ $isDe := eq .Language.Lang "de" }}
+{{ $action := site.Params.formAction | default "" }}
+
+<section id="contact" class="acai-section acai-contact">
+  <div class="acai-contact__inner">
+    <div>
+      <span class="acai-eyebrow">{{ if $isDe }}Kontakt{{ else }}Get in Touch{{ end }}</span>
+      <h2>
+        {{ if $isDe }}Kostenloses AWS Landing Zone Audit buchen{{ else }}Book Your Free AWS Landing Zone Audit{{ end }}
+      </h2>
+      <p class="acai-contact__lead">
+        {{ if $isDe }}
+          Lassen Sie uns Ihre aktuelle AWS-Umgebung bewerten und Möglichkeiten für bessere Governance, Sicherheit und Automatisierung identifizieren.
+        {{ else }}
+          Let's assess your current AWS environment and identify opportunities for better governance, security, and automation.
+        {{ end }}
+      </p>
+      <div class="acai-contact__info">
+        <span><i class="fas fa-map-marker-alt"></i> {{ if $isDe }}Schweiz{{ else }}Switzerland{{ end }}</span>
+        <a href="https://linkedin.com/company/acai-consulting" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> linkedin.com/company</a>
+        <a href="https://github.com/orgs/acai-solutions/repositories" target="_blank" rel="noopener"><i class="fab fa-github"></i> github.com/acai-solutions</a>
+        <a href="https://registry.terraform.io/search/modules?namespace=acai-solutions" target="_blank" rel="noopener"><i class="fas fa-cube"></i> Terraform Registry</a>
+      </div>
+    </div>
+    <form class="acai-contact__form" method="POST" name="contact"
+      action="{{ $action }}">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="_next" value="{{ "/thank-you/" | absLangURL }}">
+      <div>
+        <label for="acai-name">{{ if $isDe }}Name{{ else }}Name{{ end }}</label>
+        <input type="text" id="acai-name" name="name" required placeholder="Jane Smith">
+      </div>
+      <div>
+        <label for="acai-email">{{ if $isDe }}E-Mail{{ else }}Email{{ end }}</label>
+        <input type="email" id="acai-email" name="email" required placeholder="jane@company.com">
+      </div>
+      <div>
+        <label for="acai-company">{{ if $isDe }}Unternehmen{{ else }}Company{{ end }}</label>
+        <input type="text" id="acai-company" name="company" placeholder="Acme AG">
+      </div>
+      <div>
+        <label for="acai-msg">{{ if $isDe }}Nachricht{{ else }}Message{{ end }}</label>
+        <textarea id="acai-msg" name="message" required placeholder="{{ if $isDe }}Erzählen Sie uns von Ihrer AWS-Umgebung...{{ else }}Tell us about your AWS environment...{{ end }}"></textarea>
+      </div>
+      <button type="submit">
+        {{ if $isDe }}Nachricht senden{{ else }}Send Message{{ end }}
+      </button>
+    </form>
+  </div>
+</section>
